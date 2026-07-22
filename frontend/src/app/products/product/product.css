@@ -1,0 +1,137 @@
+/* Khung chứa 4 sản phẩm chia đều hoàn hảo */
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  /* Thay auto-fit thành repeat(4, 1fr) để ép chuẩn 4 cột đều nhau trên màn hình lớn */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px; /* Khoảng cách giữa các card vừa vặn hơn */
+}
+
+/* Card sản phẩm */
+.card {
+  /* XÓA width: 280px để card tự dãn đều theo khung Grid */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px; /* Tăng padding từ 10px lên 24px để các phần tử bên trong thở được */
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(14, 29, 97, 0.08);
+  border-color: #0e1d61;
+}
+
+/* Tên sản phẩm */
+.title {
+  font-size: 16px; /* Giảm nhẹ 1px cho vừa vặn với layout 4 cột */
+  color: #0e1d61;
+  font-weight: 700;
+  min-height: 48px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px; /* Thêm khoảng cách xuống phía dưới */
+}
+
+/* Giá tiền */
+.price {
+  font-size: 16px;
+  color: #ef4444;
+  font-weight: 600;
+  margin-bottom: 16px; /* Thêm khoảng cách trước khi đến ảnh */
+}
+
+/* Khung ảnh */
+.img {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px; /* Thêm khoảng cách trước khi đến mô tả */
+}
+
+.img img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Mô tả ngắn */
+.desc {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+  min-height: 63px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 16px; /* Thêm khoảng cách trước khi đến phần số lượng */
+}
+
+/* Số lượng tồn kho */
+.stock {
+  font-size: 14px;
+  color: #0e1d61;
+  margin-bottom: 16px;
+}
+
+/* Nút thêm vào giỏ */
+.btn {
+  background: #059669;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px; /* Tăng nhẹ độ dày nút bấm */
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+  margin-bottom: 4px; /* Giảm margin-bottom một chút cho sát đường gạch ngang */
+}
+
+.btn:hover {
+  background: #047857;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Đường gạch ngang phân tách */
+hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 12px 0; /* Căn đều khoảng cách trên dưới */
+}
+
+/* Số lượng giỏ hàng đáy card */
+.cart {
+  font-size: 15px;
+  color: #0e1d61;
+  font-weight: 600;
+  padding-top: 4px;
+}
+
+/* Tùy biến Responsive trên màn hình máy tính bảng và điện thoại */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr); /* Màn hình vừa chia làm 2 cột */
+  }
+}
+@media (max-width: 640px) {
+  .container {
+    grid-template-columns: 1fr; /* Màn hình điện thoại hiển thị 1 cột dọc */
+  }
+}

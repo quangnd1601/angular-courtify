@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="card" *ngFor="let product of products">
+    <h3 class="title">{{ product.name | upperCasePipe }}</h3>
+    <div class="price">Giá: {{ product.price | currencyPipe }}</div>
+
+    <a class="img" [routerLink]="['/product-detail', product.id]">
+      <img [src]="product.thumbnail" alt="{{ product.name }}" />
+    </a>
+
+    <p class="desc">{{ product.description }}</p>
+    <div class="stock">Số lượng còn lại: {{ product.inStock }}</div>
+
+    <button class="btn" (click)="addToCart(product)">Thêm vào giỏ hàng</button>
+    <hr />
+
+    <div class="cart">Giỏ hàng của bạn: {{ product.quantity }} sản phẩm</div>
+  </div>
+</div>

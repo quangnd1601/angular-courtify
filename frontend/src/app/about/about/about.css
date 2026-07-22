@@ -1,0 +1,77 @@
+/* Container chính của layout */
+.card-container {
+  background-color: #ffffff;
+  max-width: 500px;
+  margin: 24px auto;
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+/* Định dạng các phần text */
+.greeting-title {
+  font-size: 24px;
+  color: #0e1d61; /* Chuyển sang Navy Blue để đồng bộ với Header */
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.job-title {
+  font-size: 16px;
+  color: #475569; /* Sử dụng màu xám Slate đậm cho dịu mắt, tăng tính tối giản */
+  margin-bottom: 25px;
+}
+
+.job-title strong {
+  color: #0e1d61; /* Tên trường chuyển sang Navy Blue làm điểm nhấn vững chãi */
+}
+
+/* Phần xử lý ảnh đại diện */
+.avatar-wrapper {
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.avatar {
+  width: 160px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Định dạng nút bấm */
+.btn-action {
+  background-color: #0e1d61; /* Giữ màu Navy Blue chủ đạo */
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+  margin-bottom: 25px;
+}
+
+.btn-action:hover {
+  background-color: #1d3594; /* Khi hover, nút sáng lên tông xanh Navy nhẹ thay vì đổi sang đen */
+}
+
+.btn-action:active {
+  transform: scale(0.98);
+}
+
+/* Lời chào khóa học ở cuối */
+.course-welcome {
+  font-size: 18px;
+  color: #0e1d61; /* Chuyển sang Navy Blue để kết lại layout một cách đồng bộ */
+  font-weight: 600;
+}
