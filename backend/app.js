@@ -8,7 +8,17 @@ var dotenv = require("dotenv");
 dotenv.config();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRouter = require('./routes/userRoutes');
+var sportCenterRouter = require('./routes/sportCenterRoutes');
+var courtRouter = require('./routes/courtRoutes');
+var timeSlotRouter = require('./routes/timeSlotRoutes');
+var bookingRouter = require('./routes/bookingRoutes');
+var serviceRouter = require('./routes/serviceRoutes');
+var voucherRouter = require('./routes/voucherRoutes');
+var reviewRouter = require('./routes/reviewRoutes');
+var paymentRouter = require('./routes/paymentRoutes');
+var membershipRouter = require('./routes/membershipRoutes');
+var sportRouter = require('./routes/sportRoutes');
 
 var app = express();
 
@@ -23,35 +33,38 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', userRouter);
+app.use('/api/sport-centers', sportCenterRouter);
+app.use('/api/courts', courtRouter);
+app.use('/api/timeslots', timeSlotRouter);
+app.use('/api/bookings', bookingRouter);
+app.use('/api/services', serviceRouter);
+app.use('/api/vouchers', voucherRouter);
+app.use('/api/reviews', reviewRouter);
+app.use('/api/payments', paymentRouter);
+app.use('/api/memberships', membershipRouter);
+app.use('/api/sports', sportRouter);
 
-// 1. khai báo thư viện
-var mongoose = require("mongoose");
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("Kết nối thành công, đang chạy trên port: " + process.env.PORT);
-  })
-  .catch((error) => {
-    console.log("Kết nối thất bại!", error);
-  });
-  
+// 1. Kết nối Database
+const connectDB = require('./config/db');
+connectDB();
+
 // 2. tạo biến cho phép truy cập CORS
 var corsOptionsDelegate = function (req, callback) {
- var corsOptions= { origin: true };
- callback(null, corsOptions);
+  var corsOptions = { origin: true };
+  callback(null, corsOptions);
 }
 
 //chạy hàm cho phép truy cập 
 app.use(cors(corsOptionsDelegate));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
