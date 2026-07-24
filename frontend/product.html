@@ -1,0 +1,310 @@
+<!DOCTYPE html><html class="light" lang="vi" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>COUTIFY | Chi tiết sân</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        try {
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "primary": "#0e1d61",
+                            "secondary": "#0e1d61",
+                            "secondary-fixed": "#F59E0B",
+                            "on-surface": "#0b1c30",
+                            "on-surface-variant": "#454650",
+                            "surface": "#f8f9ff",
+                            "surface-bright": "#f8f9ff",
+                            "surface-dim": "#cbdbf5",
+                            "surface-container-lowest": "#ffffff",
+                            "surface-container-low": "#eff4ff",
+                            "surface-container": "#e5eeff",
+                            "surface-container-high": "#dce9ff",
+                            "surface-container-highest": "#d3e4fe",
+                            "outline": "#767681",
+                            "outline-variant": "#c6c5d2",
+                            "error": "#ba1a1a",
+                            "primary-container": "#0e1d61",
+                            "secondary-container": "#bac3ff",
+                            "on-primary-container": "#7b87d0"
+                        },
+                        borderRadius: {
+                            "DEFAULT": "4px",
+                            "lg": "8px",
+                            "xl": "12px",
+                            "2xl": "16px",
+                            "full": "9999px"
+                        },
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                            display: ["Inter", "sans-serif"]
+                        }
+                    },
+                },
+            }
+        } catch (_e) {}
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .pitch-card-shadow {
+            box-shadow: 0 4px 12px rgba(14, 29, 97, 0.08);
+        }
+        
+        .time-slot.selected {
+            background-color: #0e1d61;
+            color: #ffffff;
+            border-color: #0e1d61;
+        }
+        .btn-press {
+            transition: transform 0.1s ease-in-out;
+        }
+        .btn-press:active {
+            transform: scale(0.96);
+        }
+    </style>
+</head>
+<body class="bg-slate-200 text-on-surface font-sans">
+<!-- Narrow App Layout -->
+<div class="main-container max-w-[480px] mx-auto bg-surface min-h-screen relative shadow-2xl overflow-x-hidden pb-24">
+<!-- Minimalist Header -->
+<header class="sticky top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant">
+<div class="flex justify-between items-center px-4 h-14">
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95" onclick="window.history.back()">arrow_back</button>
+<div class="flex items-center gap-1">
+<h1 class="text-lg font-extrabold text-primary tracking-tight">COURTIFY</h1>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">favorite</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">share</button>
+</div>
+</div>
+</header>
+<main>
+<!-- Image Gallery -->
+<section class="relative h-[280px] overflow-hidden group">
+<div class="flex h-full w-full overflow-x-auto snap-x snap-mandatory hide-scrollbar" id="imageGallery">
+<div class="flex-none w-full h-full snap-start">
+<img alt="Sân bóng đá chuyên nghiệp" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaJ6uSW0rSY85ANV-A8O1PMjbYAsU8LsHyr_iIx05HJAt90UvGvNhqY7VPZa7tAbNyCes6Px8shSseH719RDGG7hJfBQY52wY4vUpzSBG3EbbzYCWJLXUaSjZFZLeuNEI2o3Q4Ezkr75gCB7cp0FXnBPW_yITuBbjmiJ960l9DylXn9xvheY7ZPQf5KXO-B7_2KN2MGY50PFyMJjOm_2ym4TwskAqGe8VwHWPAKdap_JBQYEVysYTc">
+</div>
+<div class="flex-none w-full h-full snap-start">
+<img alt="Hệ thống đèn chiếu sáng" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDRRqlnd67uAnxs2WmoDcfBqez2aO314LpVKOrWQYLR2GFJq55_871e08TKNT0u8Sh_d4EueK8vuZ8UawvWw1vA0KuqTv7qByFfKEIGY8pNKIGIU2DTxIKkIdGlGj4sqpg84m1Vxxamx1MJJ0SiMspgIJJsNj7vP2RxXaO6mhipvUFXJdCsCEV_bJk6HH4zahRzLrOgEhjgNqLbtJUMAkvOgX83ik5Uv2SUascPuBId5oiTAyH55LN">
+</div>
+<div class="flex-none w-full h-full snap-start">
+<img alt="Khu vực dịch vụ" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPTDdwCLgCEWzCz2JbffDKuCu2pad_MdGK6t8qiOYLI4RQzaYB2NLa2-9xAS_DUfBiartLQt_1ssDY2nUgapkUKfaWBnbrOb9IALRM3e5POdMxdXZF6Inga5YvvcGGJwysDSoSR6zVuYxnq1jf2GLuz1fTE_6fk9j8FArp6Gy5degBDdm5gx00R4yd3z5dCK1_hRp5Vam1d8PTonwomVvhyhLIBQDHyZNKnerxnb4K_bsJtUIU4PMf">
+</div>
+</div>
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+<div class="w-1.5 h-1.5 rounded-full bg-white" id="dot-0"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/40" id="dot-1"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/40" id="dot-2"></div>
+</div>
+</section>
+<!-- Content Flow -->
+<div class="px-4 py-6 space-y-6">
+<!-- Basic Info Card -->
+<div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40">
+<span class="inline-flex items-center gap-1 px-3 py-1 bg-secondary-fixed text-primary rounded-full text-[10px] font-bold mb-3">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">bolt</span> GIỜ CAO ĐIỂM
+                    </span>
+<div class="flex items-start justify-between">
+<h2 class="text-xl font-bold text-primary mb-2">Olympic Arena - Sân A</h2>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary-fixed text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold text-primary text-sm">4.8</span>
+</div>
+<span class="text-on-surface-variant text-[10px]">(124 đánh giá)</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-sm">Quận Tây, London</span>
+</div>
+</div><div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40">
+<h3 class="text-sm font-bold text-primary uppercase tracking-wider mb-4">Chọn sân</h3>
+<div class="flex flex-wrap gap-2">
+<button class="flex-1 min-w-[80px] py-2 px-4 rounded-lg text-sm font-semibold transition-all bg-primary text-white border border-primary">Sân 1</button>
+<button class="flex-1 min-w-[80px] py-2 px-4 rounded-lg text-sm font-semibold transition-all bg-surface text-on-surface-variant border border-outline-variant hover:border-primary">Sân 2</button>
+<button class="flex-1 min-w-[80px] py-2 px-4 rounded-lg text-sm font-semibold transition-all bg-surface text-on-surface-variant border border-outline-variant hover:border-primary">Sân 3</button>
+<button class="flex-1 min-w-[80px] py-2 px-4 rounded-lg text-sm font-semibold transition-all bg-surface text-on-surface-variant border border-outline-variant hover:border-primary">Sân 4</button>
+</div>
+</div>
+<!-- Date & Time Picker -->
+<div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40">
+<div class="mb-6">
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Chọn ngày</label>
+<div class="relative group cursor-pointer">
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" type="date" value="2024-10-12">
+<div class="flex items-center justify-between w-full p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl transition-all group-hover:border-primary">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="text-sm font-semibold text-primary">Thứ 7, 12 Tháng 10, 2024</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<div class="flex justify-between items-center mb-3">
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Khung giờ</label>
+<span class="text-[10px] font-bold text-primary bg-white px-2 py-0.5 rounded">Suất 60'</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button class="time-slot border border-outline-variant p-2 rounded-lg text-center text-sm font-semibold hover:border-primary transition-all" onclick="toggleSlot(this)">18h - 19h</button>
+<button class="time-slot border border-outline-variant p-2 rounded-lg text-center text-sm font-semibold hover:border-primary transition-all" onclick="toggleSlot(this)">19h - 20h</button>
+<button class="time-slot border border-outline-variant p-2 rounded-lg text-center text-sm font-semibold hover:border-primary transition-all" onclick="toggleSlot(this)">20h - 21h</button>
+<button class="time-slot border border-outline-variant p-2 rounded-lg text-center text-sm font-semibold transition-all hover:border-primary selected" onclick="toggleSlot(this)">21h - 22h</button>
+<button class="time-slot border border-outline-variant bg-surface-dim/20 p-2 rounded-lg text-center text-sm font-semibold text-outline cursor-not-allowed line-through">22h - 23h</button>
+<button class="time-slot border border-outline-variant p-2 rounded-lg text-center text-sm font-semibold hover:border-primary transition-all " onclick="toggleSlot(this)">23h - 24h</button>
+</div>
+</div>
+</div>
+<!-- Amenities -->
+<div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40">
+<h3 class="text-sm font-bold text-primary uppercase tracking-wider mb-4">Tiện ích</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">local_parking</span>
+<span class="text-sm font-medium">Bãi đỗ xe</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">shower</span>
+<span class="text-sm font-medium">Phòng tắm</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">local_cafe</span>
+<span class="text-sm font-medium">Đồ uống</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">highlight</span>
+<span class="text-sm font-medium">Đèn chiếu</span>
+</div>
+</div>
+</div>
+<!-- Description -->
+<div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40">
+<h3 class="text-sm font-bold text-primary uppercase tracking-wider mb-3">Mô tả chi tiết</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                        Sân cỏ nhân tạo đạt chứng nhận FIFA, được thiết kế cho các trận đấu chuyên nghiệp 5 người và 7 người. Bề mặt sân được tối ưu hóa để tăng độ bám và giảm chấn. Bao gồm quyền sử dụng phòng thay đồ hiện đại.
+                    </p>
+</div>
+<!-- Map Section -->
+<div class="bg-white rounded-2xl overflow-hidden pitch-card-shadow border border-outline-variant/40">
+<div class="p-4 border-b border-outline-variant/30 flex justify-between items-center">
+<h3 class="text-sm font-bold text-primary uppercase tracking-wider">Vị trí</h3>
+<button class="text-primary text-[10px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">map</span>
+                            XEM BẢN ĐỒ
+                        </button>
+</div>
+<div class="h-48 relative">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_5kNO2dTzLJdGGl6oxSvtRZ2HA2JMIYHa7eBoNTV9nqQ3RcWDe5W46h8ATRsrqRpny8FSKQrxYhlYQEjzyOM0Np51oPI1IijHyKiNNErEFm_GCbww3sCe5x4wDeZOMPDyWF5XU952a60PAOU7m5zVwYQ6MBVI4fHVurzQ6cHSbmNvVUxPIyPwNRC2-MDRNEx8et88HOIEF2qsFgS0YGZTZUNvhAucpbt55icia9UK1ZCVFZBNo6BO')"></div>
+<div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-white to-transparent">
+<button class="w-full py-2.5 bg-white border border-outline-variant rounded-full text-xs font-bold text-primary flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">directions</span> CHỈ ĐƯỜNG
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Buttons (FAB) -->
+<div class="fixed bottom-24 right-0 flex flex-col gap-3 z-[60] px-4 items-end pointer-events-none transition-all duration-300" id="fab-container" style="max-width: 480px; left: 50%; transform: translateX(-50%); width: 480px;">
+<button class="pointer-events-auto flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white shadow-2xl hover:bg-primary/90 transition-all active:scale-90" data-purpose="contact-button">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">phone</span>
+</button>
+<button class="pointer-events-auto flex items-center justify-center w-14 h-14 rounded-full bg-white text-primary shadow-xl border border-outline-variant opacity-0 translate-y-8 transition-all duration-300" data-purpose="scroll-top-button" id="scroll-to-top">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+</div>
+<!-- Fixed Bottom Booking Action -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-20 bg-white/95 backdrop-blur-lg border-t border-outline-variant/30 z-50 flex items-center justify-between px-6 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tight">21h - 22h • 60 phút</span>
+<span class="text-xl font-extrabold text-primary">£47.50</span>
+</div>
+<button class="btn-press px-10 h-12 bg-primary text-white font-bold text-sm rounded-full shadow-lg shadow-primary/20">
+                ĐẶT NGAY
+            </button>
+</div>
+</div>
+<script>
+        function toggleSlot(el) {
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            el.classList.add('selected');
+        }
+
+        // Image Gallery dots logic
+        const gallery = document.getElementById('imageGallery');
+        const dots = [
+            document.getElementById('dot-0'),
+            document.getElementById('dot-1'),
+            document.getElementById('dot-2')
+        ];
+        
+        if (gallery) {
+            gallery.addEventListener('scroll', () => {
+                const index = Math.round(gallery.scrollLeft / gallery.clientWidth);
+                dots.forEach((dot, i) => {
+                    if (dot) {
+                        dot.style.backgroundColor = i === index ? '#ffffff' : 'rgba(255, 255, 255, 0.4)';
+                    }
+                });
+            });
+        }
+
+        // FAB and Scroll Behavior
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        const fabContainer = document.getElementById('fab-container');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'translate-y-8');
+                scrollToTopBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'translate-y-8');
+                scrollToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        function adjustFabContainer() {
+            const viewportWidth = window.innerWidth;
+            if (viewportWidth < 480) {
+                fabContainer.style.width = '100%';
+                fabContainer.style.left = '0';
+                fabContainer.style.transform = 'none';
+            } else {
+                fabContainer.style.width = '480px';
+                fabContainer.style.left = '50%';
+                fabContainer.style.transform = 'translateX(-50%)';
+            }
+        }
+
+        window.addEventListener('resize', adjustFabContainer);
+        adjustFabContainer();
+    </script>
+
+
+</body></html>

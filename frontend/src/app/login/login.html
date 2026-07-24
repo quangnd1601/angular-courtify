@@ -1,0 +1,123 @@
+<div class="px-4 py-8 flex flex-col justify-center min-h-[90vh] bg-surface select-none">
+  <!-- Back button & branding -->
+  <div class="flex items-center gap-3 mb-6 max-w-md mx-auto w-full">
+    <button routerLink="/" class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 text-on-surface-variant">arrow_back</button>
+    <span class="text-xs font-bold uppercase tracking-wider text-outline">Quay lại trang chủ</span>
+  </div>
+
+  <div class="max-w-md mx-auto w-full bg-white rounded-3xl p-6 md:p-8 pitch-card-shadow border border-outline-variant/40 animate-in fade-in slide-in-from-bottom-4 duration-300">
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-3 shadow-inner">
+        <span class="material-symbols-outlined text-3xl">sports_score</span>
+      </div>
+      <h2 class="text-2xl font-bold text-primary mb-1">Chào mừng quay lại</h2>
+      <p class="text-xs text-on-surface-variant">Đăng nhập tài khoản Courtify của bạn</p>
+    </div>
+
+    <!-- Error message banner -->
+    <div *ngIf="errorMessage" class="bg-error/10 text-error text-xs rounded-xl p-3 mb-5 border border-error/20 flex items-center gap-2 animate-in fade-in">
+      <span class="material-symbols-outlined text-sm">error</span>
+      <span class="font-medium">{{ errorMessage }}</span>
+    </div>
+
+    <form (submit)="onSubmit()" class="flex flex-col gap-4">
+      <!-- Email -->
+      <div class="flex flex-col gap-1.5">
+        <label for="email" class="text-xs font-bold text-primary">Email hoặc số điện thoại</label>
+        <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-xl border border-outline-variant focus-within:border-primary transition-all">
+          <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">mail</span>
+          <input
+            type="email"
+            id="email"
+            placeholder="example@gmail.com"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
+            [(ngModel)]="email"
+            name="email"
+            required
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-1.5">
+        <div class="flex items-center justify-between">
+          <label for="password" class="text-xs font-bold text-primary">Mật khẩu</label>
+          <a class="text-xs font-bold text-primary/70 hover:text-primary hover:underline">Quên mật khẩu?</a>
+        </div>
+        <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-xl border border-outline-variant focus-within:border-primary transition-all">
+          <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">lock</span>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            placeholder="••••••••"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
+            [(ngModel)]="password"
+            name="password"
+            required
+            [disabled]="isLoading"
+          />
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="material-symbols-outlined text-on-surface-variant text-[20px] ml-2 cursor-pointer hover:text-primary transition-colors"
+          >
+            {{ showPassword ? 'visibility_off' : 'visibility' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Remember me -->
+      <div class="flex items-center gap-2 mt-1">
+        <input
+          type="checkbox"
+          id="remember"
+          class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 accent-primary cursor-pointer"
+        />
+        <label for="remember" class="text-xs text-on-surface-variant cursor-pointer select-none">Ghi nhớ đăng nhập</label>
+      </div>
+
+      <!-- Submit button -->
+      <button
+        type="submit"
+        [disabled]="isLoading"
+        class="w-full py-3 bg-primary text-white text-sm font-bold rounded-xl shadow-md hover:bg-primary/95 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-75 disabled:pointer-events-none mt-2 cursor-pointer"
+      >
+        <span *ngIf="isLoading" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+        {{ isLoading ? 'Đang xác thực...' : 'Đăng nhập' }}
+      </button>
+    </form>
+
+    <!-- Social Logins -->
+    <div class="relative my-6 text-center">
+      <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-outline-variant/60"></div></div>
+      <span class="relative bg-white px-3 text-[11px] text-on-surface-variant uppercase font-semibold">Hoặc đăng nhập bằng</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <button type="button" class="flex items-center justify-center gap-2 py-2.5 border border-outline-variant hover:bg-surface-container-low rounded-xl transition-all cursor-pointer text-xs font-semibold text-primary">
+        <svg class="w-4 h-4" viewBox="0 0 24 24">
+          <path fill="#EA4335" d="M12 5.04c1.62 0 3.08.56 4.22 1.65l3.15-3.15C17.45 1.76 14.93 1 12 1 7.37 1 3.4 3.66 1.45 7.54l3.77 2.92C6.12 7.02 8.84 5.04 12 5.04z"/>
+          <path fill="#4285F4" d="M23.45 12.3c0-.82-.07-1.6-.2-2.3H12v4.35h6.43c-.28 1.45-1.1 2.68-2.33 3.5v2.9h3.76c2.2-2.02 3.59-5 3.59-8.45z"/>
+          <path fill="#FBBC05" d="M5.22 14.77a7.15 7.15 0 0 1 0-4.54L1.45 7.3a12.01 12.01 0 0 0 0 9.4l3.77-2.93z"/>
+          <path fill="#34A853" d="M12 23c3.24 0 5.97-1.08 7.96-2.9l-3.76-2.9c-1.1.74-2.5 1.18-4.2 1.18-3.16 0-5.88-1.98-6.84-4.94L1.39 16.3C3.34 20.2 7.37 23 12 23z"/>
+        </svg>
+        Google
+      </button>
+      <button type="button" class="flex items-center justify-center gap-2 py-2.5 border border-outline-variant hover:bg-surface-container-low rounded-xl transition-all cursor-pointer text-xs font-semibold text-primary">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path fill="#1877F2" d="M24 12a12 12 0 1 0-13.875 11.854v-8.385H7.078V12h3.047V9.354c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874V12h3.328l-.532 3.469h-2.796v8.385A12 12 0 0 0 24 12z"/>
+        </svg>
+        Facebook
+      </button>
+    </div>
+
+    <!-- Redirect link -->
+    <div class="mt-8 text-center">
+      <p class="text-xs text-on-surface-variant">
+        Chưa có tài khoản Courtify? 
+        <a routerLink="/register" class="text-primary font-bold hover:underline cursor-pointer">Đăng ký ngay</a>
+      </p>
+    </div>
+  </div>
+</div>

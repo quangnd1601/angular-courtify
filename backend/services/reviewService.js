@@ -22,7 +22,15 @@ const createReview = async (reviewData) => {
   return savedReview;
 };
 
+const getAllReviews = async () => {
+  return await Review.find()
+    .sort({ created_at: -1 })
+    .populate('user_id', 'name avatar_url')
+    .populate('sport_center_id', 'name');
+};
+
 module.exports = {
   getReviewsByCenter,
-  createReview
+  createReview,
+  getAllReviews
 };

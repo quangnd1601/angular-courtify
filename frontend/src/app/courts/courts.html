@@ -1,0 +1,164 @@
+<div class="px-4 py-4 pb-24 min-h-screen bg-surface">
+  <!-- Header -->
+  <div class="flex items-center gap-3 mb-4">
+    <button routerLink="/" class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 text-on-surface-variant">arrow_back</button>
+    <h1 class="text-xl font-bold text-on-surface">Tìm Sân</h1>
+  </div>
+
+  <!-- Search bar -->
+  <div class="bg-white p-3 rounded-2xl shadow-sm border border-outline-variant mb-4 sticky top-[60px] z-40">
+    <div class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-xl border border-outline-variant focus-within:border-primary transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant">search</span>
+      <input
+        type="text"
+        placeholder="Tìm tên sân, khu vực..."
+        class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearchChange($event)"
+      />
+      <button
+        (click)="toggleFilterPanel()"
+        class="material-symbols-outlined p-1 rounded-lg cursor-pointer transition-colors"
+        [ngClass]="showFilterPanel || minPrice || maxPrice || minRating > 0 || sortBy !== 'bookings_desc' ? 'text-white bg-primary' : 'text-primary bg-primary/10'"
+      >
+        tune
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showFilterPanel" class="bg-white p-4 rounded-2xl shadow-lg border border-outline-variant mb-6 flex flex-col gap-4 animate-in slide-in-from-top-2">
+    <div>
+      <h3 class="text-sm font-bold text-on-surface mb-2">Khoảng giá (VNĐ)</h3>
+      <div class="flex items-center gap-2">
+        <input
+          type="number"
+          [(ngModel)]="minPrice"
+          placeholder="Tối thiểu"
+          class="flex-1 bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm outline-none focus:border-primary"
+        />
+        <span class="text-on-surface-variant">-</span>
+        <input
+          type="number"
+          [(ngModel)]="maxPrice"
+          placeholder="Tối đa"
+          class="flex-1 bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm outline-none focus:border-primary"
+        />
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-bold text-on-surface mb-2">Đánh giá tối thiểu</h3>
+      <div class="flex gap-2">
+        <button
+          (click)="minRating = 0"
+          class="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border"
+          [ngClass]="minRating === 0 ? 'bg-primary text-white border-primary' : 'bg-surface text-on-surface-variant border-outline-variant'"
+        >
+          Tất cả
+        </button>
+        <button
+          (click)="minRating = 3"
+          class="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border flex items-center gap-1"
+          [ngClass]="minRating === 3 ? 'bg-primary text-white border-primary' : 'bg-surface text-on-surface-variant border-outline-variant'"
+        >
+          3
+          <span class="material-symbols-outlined text-[12px]" [style.fontVariationSettings]="minRating === 3 ? '\'FILL\' 1' : '\'FILL\' 0'">star</span>
+        </button>
+        <button
+          (click)="minRating = 4"
+          class="px-3 py-1.5 rounded-full text-xs font-bold transition-colors border flex items-center gap-1"
+          [ngClass]="minRating === 4 ? 'bg-primary text-white border-primary' : 'bg-surface text-on-surface-variant border-outline-variant'"
+        >
+          4
+          <span class="material-symbols-outlined text-[12px]" [style.fontVariationSettings]="minRating === 4 ? '\'FILL\' 1' : '\'FILL\' 0'">star</span>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-bold text-on-surface mb-2">Sắp xếp theo</h3>
+      <select
+        [(ngModel)]="sortBy"
+        class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm outline-none focus:border-primary text-on-surface"
+      >
+        <option value="bookings_desc">Phổ biến nhất</option>
+        <option value="price_asc">Giá: Thấp đến cao</option>
+        <option value="price_desc">Giá: Cao đến thấp</option>
+        <option value="rating_desc">Đánh giá cao</option>
+        <option value="newest">Mới nhất</option>
+      </select>
+    </div>
+
+    <div class="flex items-center gap-3 mt-2 pt-4 border-t border-outline-variant/50">
+      <button
+        (click)="resetFilters()"
+        class="flex-1 py-2 text-error text-sm font-bold border border-error/30 rounded-xl hover:bg-error/5 active:scale-95 transition-all"
+      >
+        Xóa lọc
+      </button>
+      <button
+        (click)="applyFilters()"
+        class="flex-[2] py-2 bg-primary text-white text-sm font-bold rounded-xl shadow-md hover:bg-primary/90 active:scale-95 transition-all"
+      >
+        Áp dụng
+      </button>
+    </div>
+  </div>
+
+  <div class="flex overflow-x-auto gap-2 hide-scrollbar mb-4 pb-1">
+    <button
+      (click)="selectSport('')"
+      class="whitespace-nowrap px-4 py-1.5 text-xs font-bold rounded-full transition-colors border"
+      [ngClass]="selectedSportId === '' ? 'bg-primary text-white border-primary' : 'bg-white text-on-surface border-outline-variant'"
+    >
+      Tất cả
+    </button>
+
+    <button
+      *ngFor="let sport of sports; trackBy: trackById"
+      (click)="selectSport(sport._id)"
+      class="whitespace-nowrap px-4 py-1.5 text-xs font-bold rounded-full transition-colors border"
+      [ngClass]="selectedSportId === sport._id ? 'bg-primary text-white border-primary' : 'bg-white text-on-surface border-outline-variant'"
+    >
+      {{ sport.name }}
+    </button>
+  </div>
+
+  <div class="flex items-center justify-between mb-4">
+    <p class="text-sm text-on-surface-variant">
+      <span class="font-bold text-on-surface">{{ centers.length }}</span> sân được tìm thấy
+    </p>
+    <div class="flex items-center gap-1 text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded-md">
+      <span class="material-symbols-outlined text-[14px]">sort</span>
+      {{ getSortLabel() }}
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="bg-error/10 text-error rounded-2xl p-4 mb-4 border border-error/20">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+    <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && centers.length === 0" class="bg-white rounded-2xl p-8 border border-outline-variant text-center shadow-sm">
+    <div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-4">
+      <span class="material-symbols-outlined text-on-surface-variant text-3xl">sports_score</span>
+    </div>
+    <h3 class="text-base font-bold text-on-surface mb-2">Không tìm thấy sân</h3>
+    <p class="text-sm text-on-surface-variant mb-4">Thử thay đổi từ khóa hoặc bộ lọc của bạn để xem thêm kết quả.</p>
+    <button
+      (click)="resetFilters()"
+      class="px-4 py-2 bg-primary/10 text-primary font-bold text-sm rounded-xl hover:bg-primary/20 transition-colors"
+    >
+      Xóa bộ lọc
+    </button>
+  </div>
+
+  <div *ngIf="!isLoading && centers.length > 0" class="grid gap-4">
+    <div *ngFor="let center of centers; trackBy: trackById" class="h-[320px]">
+      <app-sport-center-card [center]="center"></app-sport-center-card>
+    </div>
+  </div>
+</div>

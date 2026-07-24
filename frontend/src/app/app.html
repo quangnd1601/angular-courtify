@@ -1,6 +1,7 @@
-<main class="main">
-  <app-header></app-header>
+<div class="main-container max-w-[480px] mx-auto bg-surface min-h-screen relative shadow-2xl overflow-x-hidden">
+  <app-header (menuClick)="isSidebarOpen = true"></app-header>
+  <app-sidebar [isOpen]="isSidebarOpen" (close)="isSidebarOpen = false"></app-sidebar>
 
   <router-outlet></router-outlet>
   <app-footer></app-footer>
-</main>
+</div>

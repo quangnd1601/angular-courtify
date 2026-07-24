@@ -1,0 +1,45 @@
+<div class="bg-white rounded-xl overflow-hidden pitch-card-shadow border border-outline-variant group flex flex-col h-full w-full">
+  <div class="relative h-40 overflow-hidden shrink-0">
+    <img alt="{{ center.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg6rMVZge-nQdNyklyUju1q_Gy9sJyNPEwOYvMCxJ1QpSdH2vvfjb8l70Jx6viOTQLxa5alcEIZrYhgNrP0Zqn3clX74t6Rib1y3CaRU7AOBCnqEoTiLi6veEcBYJ3XXmMtnJhhGXgg6Pgji3AvHVvn5PpzKRc_pzuSu3DIZwZLx3IAZuMEQyb_3SCNfbQg4My_ZCSlix_d28IC5NSN9zimmdhd9oX9W9Dv0FQ5ixYd0ALl9LaL_KE">
+    
+    <div class="absolute top-2 right-2 bg-white/95 backdrop-blur px-2 py-1 rounded flex items-center gap-1 shadow-sm">
+      <span class="material-symbols-outlined text-secondary text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+      <span class="text-xs font-bold text-on-surface">{{ (center.average_rating || 5) | number:'1.1-1' }}</span>
+      <span class="text-[10px] text-on-surface-variant">({{ center.total_reviews || 0 }})</span>
+    </div>
+    
+    <div class="absolute bottom-2 left-2 bg-black/60 backdrop-blur text-white px-2 py-0.5 rounded text-[10px] flex items-center gap-1">
+      <span class="material-symbols-outlined text-[12px]">calendar_month</span>
+      {{ center.total_bookings || 0 }} lượt đặt
+    </div>
+    
+    <div class="absolute top-2 left-2 bg-primary text-white px-2 py-0.5 rounded text-[10px] font-bold shadow-sm">
+      {{ center.sport_id?.name || 'Thể thao' }}
+    </div>
+  </div>
+  
+  <div class="p-4 flex-1 flex flex-col justify-between">
+    <div>
+      <h4 class="font-bold text-base text-primary mb-1 truncate">{{ center.name }}</h4>
+      <p class="text-xs text-on-surface-variant flex items-center gap-1 mb-2 truncate">
+        <span class="material-symbols-outlined text-sm">location_on</span> {{ center.address }}
+      </p>
+      <div class="flex items-center gap-3 mb-3 border-t border-outline-variant/30 pt-2">
+        <div class="flex items-center gap-1 text-[11px] text-on-surface-variant">
+          <span class="material-symbols-outlined text-[14px]">schedule</span>
+          <span>{{ center.opening_time }} - {{ center.closing_time }}</span>
+        </div>
+        <div class="flex items-center gap-1 text-[11px] text-on-surface-variant">
+          <span class="material-symbols-outlined text-[14px]">visibility</span>
+          <span>{{ center.total_views || 0 }} xem</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-between mt-auto">
+      <div>
+        <span class="text-primary font-bold text-lg">{{ center.default_price | number }}đ<span class="text-[10px] font-normal text-on-surface-variant">/giờ</span></span>
+      </div>
+      <button [routerLink]="['/court-detail', center._id]" class="btn-press bg-primary text-white px-4 py-2 rounded-full text-xs font-bold shadow-md shadow-primary/20 cursor-pointer hover:bg-primary/90">Đặt ngay</button>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,15 @@ const sportCenterService = require('../services/sportCenterService');
 
 const getAllCenters = async (req, res) => {
   try {
-    const centers = await sportCenterService.getAllCenters();
+    const filters = {
+      search: req.query.search,
+      sport_id: req.query.sport_id,
+      min_price: req.query.min_price,
+      max_price: req.query.max_price,
+      min_rating: req.query.min_rating,
+      sort: req.query.sort,
+    };
+    const centers = await sportCenterService.getAllCenters(filters);
     res.status(200).json({ success: true, data: centers });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

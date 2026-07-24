@@ -1,0 +1,225 @@
+<div class="px-4 py-6 pb-32 space-y-6 bg-surface" *ngIf="center">
+  <!-- Header with back button -->
+  <div class="flex items-center justify-between mb-2">
+    <button routerLink="/courts" class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 text-on-surface-variant bg-white shadow-sm border border-outline-variant/30">arrow_back</button>
+  </div>
+
+  <!-- Image Gallery -->
+  <section class="relative h-[280px] overflow-hidden group rounded-2xl bg-surface-container-low">
+    <div class="flex h-full w-full overflow-x-auto snap-x snap-mandatory hide-scrollbar" (scroll)="onGalleryScroll($event)">
+      <div class="flex-none w-full h-full snap-start relative">
+        <img [alt]="center.name" class="w-full h-full object-cover" [src]="center.thumbnail || 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?q=80&w=800&auto=format&fit=crop'">
+      </div>
+      <!-- Add more default images for demo -->
+      <div class="flex-none w-full h-full snap-start">
+        <img alt="Hệ thống đèn chiếu sáng" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=800&auto=format&fit=crop">
+      </div>
+      <div class="flex-none w-full h-full snap-start">
+        <img alt="Khu vực dịch vụ" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1612534847738-b3af9bc31f0c?q=80&w=800&auto=format&fit=crop">
+      </div>
+    </div>
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div class="w-1.5 h-1.5 rounded-full transition-colors" [style.backgroundColor]="activeGalleryIndex === 0 ? '#ffffff' : 'rgba(255, 255, 255, 0.4)'"></div>
+      <div class="w-1.5 h-1.5 rounded-full transition-colors" [style.backgroundColor]="activeGalleryIndex === 1 ? '#ffffff' : 'rgba(255, 255, 255, 0.4)'"></div>
+      <div class="w-1.5 h-1.5 rounded-full transition-colors" [style.backgroundColor]="activeGalleryIndex === 2 ? '#ffffff' : 'rgba(255, 255, 255, 0.4)'"></div>
+    </div>
+  </section>
+
+  <!-- Basic Info Card -->
+  <div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40">
+    <span class="inline-flex items-center gap-1 px-3 py-1 bg-primary text-white rounded-full text-[10px] font-bold mb-3 shadow-sm">
+      {{ center.sport_id?.name || 'Thể thao' }}
+    </span>
+    <div class="flex items-start justify-between">
+      <h2 class="text-xl font-bold text-primary mb-2">{{ center.name }}</h2>
+      <div class="flex flex-col items-end">
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-secondary-fixed text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+          <span class="font-bold text-primary text-sm">{{ center.average_rating | number:'1.1-1' }}</span>
+        </div>
+        <span class="text-on-surface-variant text-[10px]">({{ center.total_reviews }} đánh giá)</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 text-on-surface-variant mt-1">
+      <span class="material-symbols-outlined text-[16px]">location_on</span>
+      <span class="text-sm line-clamp-2">{{ center.address }}</span>
+    </div>
+    <div class="flex items-center gap-3 mt-3 border-t border-outline-variant/30 pt-3 text-sm text-on-surface-variant">
+      <div class="flex items-center gap-1">
+        <span class="material-symbols-outlined text-[16px]">schedule</span>
+        <span>{{ center.opening_time }} - {{ center.closing_time }}</span>
+      </div>
+      <div class="flex items-center gap-1">
+        <span class="material-symbols-outlined text-[16px]">visibility</span>
+        <span>{{ center.total_views }} lượt xem</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chọn Sân -->
+  <div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40" *ngIf="courts.length > 0">
+    <h3 class="text-sm font-bold text-primary uppercase tracking-wider mb-4">Chọn sân</h3>
+    <div class="flex flex-wrap gap-2">
+      <button
+        *ngFor="let court of courts"
+        (click)="selectCourt(court._id)"
+        class="flex-1 min-w-[80px] py-2 px-3 rounded-xl text-sm font-bold transition-all border"
+        [ngClass]="selectedCourtId === court._id ? 'bg-primary text-white border-primary shadow-md' : 'bg-surface text-on-surface-variant border-outline-variant hover:border-primary/50'">
+        {{ court.court_name }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Date & Time Picker -->
+  <div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40">
+    <div class="mb-4">
+      <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Chọn ngày</label>
+      <div class="relative group cursor-pointer">
+        <input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" type="date" [(ngModel)]="selectedDate">
+        <div class="flex items-center justify-between w-full p-3 bg-surface-container-low border border-outline-variant/30 rounded-xl transition-all focus-within:border-primary">
+          <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">calendar_today</span>
+            <span class="text-sm font-semibold text-primary">{{ formatDateDisplay() }}</span>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-6">
+      <div class="flex justify-between items-center mb-3">
+        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Khung giờ</label>
+        <span class="text-[10px] text-on-surface-variant">Có thể chọn nhiều khung giờ/sân</span>
+      </div>
+
+      <!-- Sáng -->
+      <div class="mb-4" *ngIf="morningSlots.length > 0">
+        <h4 class="text-xs font-bold text-on-surface-variant mb-2 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">wb_sunny</span> Sáng</h4>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            *ngFor="let slot of morningSlots"
+            (click)="toggleSlot(slot)"
+            class="border p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center"
+            [ngClass]="isSlotSelected(slot._id) ? 'bg-primary text-white border-primary shadow-md scale-[1.02]' : 'bg-surface border-outline-variant text-on-surface hover:border-primary/50'">
+            <span class="text-xs font-bold">{{ slot.start_time }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chiều -->
+      <div class="mb-4" *ngIf="afternoonSlots.length > 0">
+        <h4 class="text-xs font-bold text-on-surface-variant mb-2 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">partly_cloudy_day</span> Chiều</h4>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            *ngFor="let slot of afternoonSlots"
+            (click)="toggleSlot(slot)"
+            class="border p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center"
+            [ngClass]="isSlotSelected(slot._id) ? 'bg-primary text-white border-primary shadow-md scale-[1.02]' : 'bg-surface border-outline-variant text-on-surface hover:border-primary/50'">
+            <span class="text-xs font-bold">{{ slot.start_time }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tối -->
+      <div class="mb-2" *ngIf="eveningSlots.length > 0">
+        <h4 class="text-xs font-bold text-on-surface-variant mb-2 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">dark_mode</span> Tối</h4>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            *ngFor="let slot of eveningSlots"
+            (click)="toggleSlot(slot)"
+            class="border p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center"
+            [ngClass]="isSlotSelected(slot._id) ? 'bg-primary text-white border-primary shadow-md scale-[1.02]' : 'bg-surface border-outline-variant text-on-surface hover:border-primary/50'">
+            <span class="text-xs font-bold">{{ slot.start_time }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services / Amenities -->
+  <div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40" *ngIf="services.length > 0">
+    <h3 class="text-sm font-bold text-primary uppercase tracking-wider mb-4">Dịch vụ & Tiện ích</h3>
+    <div class="grid grid-cols-2 gap-3">
+      <div *ngFor="let service of services" class="flex items-center gap-3 p-2 bg-surface-container-low rounded-xl border border-outline-variant/30">
+        <img [src]="service.image_url" class="w-10 h-10 object-cover rounded-lg" alt="service">
+        <div class="flex flex-col">
+          <span class="text-xs font-bold text-on-surface line-clamp-1">{{ service.service_name }}</span>
+          <span class="text-[10px] text-primary font-bold">{{ service.price | number }}đ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40" *ngIf="center.description">
+    <h3 class="text-sm font-bold text-primary uppercase tracking-wider mb-3">Mô tả chi tiết</h3>
+    <p class="text-sm text-on-surface-variant leading-relaxed">{{ center.description }}</p>
+  </div>
+
+  <!-- Reviews Preview -->
+  <div class="bg-white rounded-2xl p-4 pitch-card-shadow border border-outline-variant/40" *ngIf="reviews.length > 0">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-sm font-bold text-primary uppercase tracking-wider">Đánh giá ({{ reviews.length }})</h3>
+      <a href="#" class="text-xs font-bold text-primary hover:underline">Xem tất cả</a>
+    </div>
+    <div class="flex flex-col gap-3">
+      <div *ngFor="let review of reviews | slice:0:3" class="border-b border-outline-variant/20 pb-3 last:border-0 last:pb-0">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold">
+              {{ review.user_id?.name?.charAt(0) || 'U' }}
+            </div>
+            <span class="text-xs font-bold">{{ review.user_id?.name || 'Người dùng ẩn danh' }}</span>
+          </div>
+          <div class="flex items-center gap-0.5">
+            <span *ngFor="let i of [1,2,3,4,5]" class="material-symbols-outlined text-[12px]" 
+                  [ngClass]="i <= review.rating ? 'text-secondary-fixed' : 'text-outline-variant'"
+                  [style.fontVariationSettings]="i <= review.rating ? '\'FILL\' 1' : '\'FILL\' 0'">star</span>
+          </div>
+        </div>
+        <p class="text-[11px] text-on-surface-variant pl-8">{{ review.comment }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map Section -->
+  <div class="bg-white rounded-2xl overflow-hidden pitch-card-shadow border border-outline-variant/40">
+    <div class="p-4 border-b border-outline-variant/30 flex justify-between items-center">
+      <h3 class="text-sm font-bold text-primary uppercase tracking-wider">Vị trí</h3>
+    </div>
+    <div class="h-48 relative">
+      <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_5kNO2dTzLJdGGl6oxSvtRZ2HA2JMIYHa7eBoNTV9nqQ3RcWDe5W46h8ATRsrqRpny8FSKQrxYhlYQEjzyOM0Np51oPI1IijHyKiNNErEFm_GCbww3sCe5x4wDeZOMPDyWF5XU952a60PAOU7m5zVwYQ6MBVI4fHVurzQ6cHSbmNvVUxPIyPwNRC2-MDRNEx8et88HOIEF2qsFgS0YGZTZUNvhAucpbt55icia9UK1ZCVFZBNo6BO')"></div>
+      <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-white/80 to-white/10 backdrop-blur-[2px]">
+        <button class="w-full py-2.5 bg-white border border-outline-variant rounded-xl text-xs font-bold text-primary flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-transform cursor-pointer hover:border-primary">
+          <span class="material-symbols-outlined text-[18px]">directions</span> CHỈ ĐƯỜNG
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fixed bottom-16 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-24 bg-white border-t border-outline-variant/30 z-[60] flex items-center justify-between px-4 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+    
+    <!-- State when slots are selected -->
+    <ng-container *ngIf="getTotalSelected() > 0; else emptyState">
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-primary">Đã chọn {{ getTotalSelected() }} suất</span>
+        <span class="text-lg font-extrabold text-primary">{{ getTotalPrice() | number }}đ</span>
+      </div>
+      <button routerLink="/checkout" 
+        class="px-8 h-12 bg-primary text-white font-bold text-sm rounded-xl shadow-lg shadow-primary/30 transition-transform active:scale-95">
+        ĐẶT NGAY
+      </button>
+    </ng-container>
+
+    <!-- Empty State -->
+    <ng-template #emptyState>
+      <div class="w-full flex items-center justify-center text-sm font-bold text-on-surface-variant">
+        Vui lòng chọn khung giờ để đặt sân
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<div *ngIf="!center" class="min-h-screen flex items-center justify-center bg-surface">
+  <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+</div>

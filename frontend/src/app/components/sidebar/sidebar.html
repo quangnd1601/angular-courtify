@@ -1,0 +1,84 @@
+<div 
+  class="fixed inset-0 z-[100] transition-opacity duration-300 max-w-[480px] mx-auto"
+  [class.opacity-0]="!isOpen"
+  [class.pointer-events-none]="!isOpen"
+  [class.opacity-100]="isOpen"
+  [class.pointer-events-auto]="isOpen">
+  
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/60" (click)="closeSidebar()"></div>
+
+  <!-- Sidebar Panel -->
+  <div 
+    class="absolute top-0 left-0 h-full w-[280px] max-w-[85%] bg-surface shadow-2xl transition-transform duration-300 flex flex-col overflow-hidden"
+    [class.-translate-x-full]="!isOpen"
+    [class.translate-x-0]="isOpen">
+    
+    <!-- Header -->
+    <div class="p-4 bg-primary text-white flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/30 overflow-hidden shrink-0">
+          <img *ngIf="getCurrentUser()?.avatar_url" [src]="getCurrentUser()?.avatar_url" alt="Avatar" class="w-full h-full object-cover" />
+          <span *ngIf="!getCurrentUser()?.avatar_url" class="material-symbols-outlined">person</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h4 class="font-bold text-sm mb-0.5 truncate">{{ getCurrentUser() ? getCurrentUser().name : 'Chào bạn,' }}</h4>
+          <p *ngIf="!getCurrentUser()" class="text-xs text-primary-fixed cursor-pointer hover:underline font-bold" routerLink="/login" (click)="closeSidebar()">Đăng nhập ngay</p>
+          <p *ngIf="getCurrentUser()" class="text-xs text-[#ffdad6] cursor-pointer hover:underline font-bold" (click)="logout()">Đăng xuất</p>
+        </div>
+      </div>
+      <button class="material-symbols-outlined text-white/80 p-1 rounded-full hover:bg-white/10 active:scale-90 transition-transform" (click)="closeSidebar()">close</button>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto py-2">
+      <ul class="flex flex-col">
+        <li>
+          <a routerLink="/" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">home</span>
+            <span class="font-bold text-sm">Trang chủ</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/courts" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">search</span>
+            <span class="font-bold text-sm">Tìm sân</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="#" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">history</span>
+            <span class="font-bold text-sm">Lịch sử đặt sân</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="#" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">local_activity</span>
+            <span class="font-bold text-sm">Khuyến mãi</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="#" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">article</span>
+            <span class="font-bold text-sm">Tin tức</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="#" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">support_agent</span>
+            <span class="font-bold text-sm">Hỗ trợ khách hàng</span>
+          </a>
+        </li>
+      </ul>
+      <hr class="border-t border-outline-variant/50 my-2 mx-6">
+      <ul class="flex flex-col">
+        <li>
+          <a routerLink="#" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-on-surface-variant">settings</span>
+            <span class="font-bold text-sm">Cài đặt</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

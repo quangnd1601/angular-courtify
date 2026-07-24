@@ -1,0 +1,229 @@
+<main class="pb-20">
+  <section class="relative h-[280px] overflow-hidden bg-primary">
+    <div class="absolute inset-0 z-0 opacity-50"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent z-10"></div>
+    <div class="relative z-20 h-full flex flex-col justify-end p-6">
+      <h2 class="font-headline-lg-mobile text-white mb-4 leading-tight">Đặt sân đẳng cấp cho <span
+          class="text-secondary-fixed">những trận đấu đỉnh cao.</span></h2>
+      <div class="bg-surface p-3 rounded-xl shadow-xl flex flex-col gap-2 border border-outline-variant">
+        <div
+          class="flex items-center bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant cursor-pointer group hover:border-secondary transition-colors">
+          <span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">location_on</span>
+          <div class="flex-1">
+            <p class="text-[10px] text-on-surface-variant font-medium">Địa điểm</p>
+            <p class="text-sm font-body-md text-outline">Chọn địa điểm</p>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+        </div>
+        <div
+          class="flex items-center bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant cursor-pointer group hover:border-secondary transition-colors">
+          <span class="material-symbols-outlined text-on-surface-variant text-sm mr-2">sports_soccer</span>
+          <div class="flex-1">
+            <p class="text-[10px] text-on-surface-variant font-medium">Môn thể thao</p>
+            <p class="text-sm font-body-md text-outline">Chọn môn thể thao</p>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm">expand_more</span>
+        </div>
+        <button routerLink="/courts"
+          class="btn-press bg-primary text-white font-label-md text-label-md py-3 mt-1 rounded-full flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-sm cursor-pointer">
+          <span class="material-symbols-outlined text-sm">search</span>Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Danh mục Thể thao -->
+  <section class="mt-8 px-4">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-xl font-bold text-on-surface border-l-4 border-primary pl-3 leading-tight tracking-tight">Danh mục
+      </h3>
+      <a class="text-[#0e1d61] text-base font-label-sm hover:underline" href="#">Xem tất cả</a>
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <button
+        *ngFor="let sport of sports"
+        class="group btn-press flex items-center gap-3 p-3 bg-white border border-outline-variant rounded-xl hover:border-secondary transition-all">
+        <div class="w-10 h-10 rounded-lg overflow-hidden shrink-0">
+          <img [src]="getSportImage(sport.name)" [alt]="sport.name"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+        </div>
+        <span class="font-label-md text-sm text-on-surface truncate">{{ sport.name }}</span>
+      </button>
+      <div *ngIf="sports.length === 0" class="col-span-2 text-center py-4 text-xs text-on-surface-variant">Đang tải danh mục...</div>
+    </div>
+  </section>
+
+  <!-- Sân Phổ Biến (Đặt nhiều) -->
+  <section class="mt-10 overflow-hidden">
+    <div class="px-4 flex items-end justify-between mb-4">
+      <h3 class="text-xl font-bold text-on-surface border-l-4 border-primary pl-3 leading-tight tracking-tight">Sân phổ
+        biến nhất</h3>
+    </div>
+    <div class="flex overflow-x-auto gap-4 px-4 hide-scrollbar pb-6">
+      <div *ngFor="let center of popularCenters" class="min-w-[280px] max-w-[280px]">
+        <app-sport-center-card [center]="center"></app-sport-center-card>
+      </div>
+      <div *ngIf="popularCenters.length === 0" class="w-full text-center py-6 text-on-surface-variant text-sm">Đang tải sân phổ biến...</div>
+    </div>
+  </section>
+
+  <!-- Banner Ưu Đãi -->
+  <section class="mt-2 px-4">
+    <div class="flex overflow-x-auto gap-4 hide-scrollbar">
+      <div *ngFor="let voucher of vouchers" class="relative min-w-full rounded-2xl overflow-hidden bg-primary h-40 flex items-center p-6 border border-outline shrink-0">
+        <div class="absolute inset-0 opacity-30 z-0">
+          <img alt="Hình nền năng động" class="w-full h-full object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMugdGOxoX3C4ATGh7LlK5C2r8cxY07AEdwct5M9NaPwX7kmoGZxFjCUIKD7uQrf6rovwRFiWTJqD8JHsJGriw2yahyzX3Ah6gUolLgWEFKOEeiwKUSaDOlwfqKdH0_D804raPkfLcTNRgvLAg3Ur34ntWv_b_BRwpqfsBJTMmznrXe6ODy3048waxs3Cgc70uxCpKliyXzGOHigyi5WzdtAS3Vu63zQ4ZJMHFMV6T4FT2p6uv_n3_">
+        </div>
+        <div class="relative z-10 w-full flex justify-between items-center">
+          <div>
+            <span
+              class="bg-secondary-fixed text-primary px-2 py-0.5 rounded-full text-[10px] font-bold mb-2 inline-block">ƯU
+              ĐÃI</span>
+            <h3 class="font-headline-md text-base text-white mb-1">
+              {{ voucher.discount_type === 'PERCENTAGE' ? 'Giảm ' + voucher.discount_value + '%' : 'Giảm ' +
+              (voucher.discount_value | number) + 'đ' }}
+            </h3>
+            <p class="text-xs text-primary-fixed mb-4">Code: <span class="text-secondary-fixed font-bold">{{
+                voucher.code }}</span></p>
+          </div>
+          <button
+            class="btn-press bg-primary text-white text-xs font-label-md px-4 py-1.5 rounded-full border border-white/50">Lưu
+            mã</button>
+        </div>
+      </div>
+      <div *ngIf="vouchers.length === 0"
+        class="w-full text-center py-6 text-on-surface-variant text-sm border border-dashed border-outline-variant rounded-2xl">
+        Hiện chưa có chương trình khuyến mãi nào.
+      </div>
+    </div>
+  </section>
+
+  <!-- Sân Hot Trending (Xem nhiều) -->
+  <section class="mt-10 overflow-hidden">
+    <div class="px-4 flex items-end justify-between mb-4">
+      <h3 class="text-xl font-bold text-on-surface border-l-4 border-error pl-3 leading-tight tracking-tight">Sân Hot
+        Trending</h3>
+    </div>
+    <div class="flex overflow-x-auto gap-4 px-4 hide-scrollbar pb-6">
+      <div *ngFor="let center of trendingCenters" class="min-w-[280px] max-w-[280px]">
+        <app-sport-center-card [center]="center"></app-sport-center-card>
+      </div>
+      <div *ngIf="trendingCenters.length === 0" class="w-full text-center py-6 text-on-surface-variant text-sm">Đang tải...</div>
+    </div>
+  </section>
+
+  <!-- Tin tức & Sự kiện -->
+  <section class="mt-8 px-4">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-xl font-bold text-on-surface border-l-4 border-tertiary pl-3 leading-tight tracking-tight">Tin tức
+        & Sự kiện</h3>
+      <a class="text-[#0e1d61] text-base font-label-sm hover:underline" href="#">Xem tất cả</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <div *ngFor="let article of news" class="bg-white rounded-xl overflow-hidden border border-outline-variant flex gap-3 h-24 pitch-card-shadow cursor-pointer group hover:border-tertiary transition-colors">
+        <div class="w-24 h-full overflow-hidden shrink-0">
+          <img src="{{ article.thumbnail }}"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="News">
+        </div>
+        <div class="py-2 pr-3 flex-1 flex flex-col justify-center">
+          <h4 class="font-bold text-sm text-primary line-clamp-2 mb-1 group-hover:text-tertiary transition-colors">{{ article.title }}</h4>
+          <p class="text-[10px] text-on-surface-variant flex items-center gap-1"><span
+              class="material-symbols-outlined text-[10px]">schedule</span> {{ article.date }}</p>
+        </div>
+      </div>
+      <div *ngIf="news.length === 0"
+        class="w-full text-center py-8 text-on-surface-variant text-sm bg-surface-container-low rounded-2xl border border-dashed border-outline-variant">
+        Đang cập nhật tin tức và sự kiện mới...
+      </div>
+    </div>
+  </section>
+
+  <!-- Sân Đánh Giá Tốt Nhất -->
+  <section class="mt-10 overflow-hidden">
+    <div class="px-4 flex items-end justify-between mb-4">
+      <h3 class="text-xl font-bold text-on-surface border-l-4 border-secondary pl-3 leading-tight tracking-tight">Sân
+        được đánh giá cao</h3>
+
+    </div>
+    <div class="flex overflow-x-auto gap-4 px-4 hide-scrollbar pb-6">
+      <div *ngFor="let center of topRatedCenters" class="min-w-[280px] max-w-[280px]">
+        <app-sport-center-card [center]="center"></app-sport-center-card>
+      </div>
+      <div *ngIf="topRatedCenters.length === 0" class="w-full text-center py-6 text-on-surface-variant text-sm">Đang tải...</div>
+    </div>
+  </section>
+
+  <!-- Đánh giá nổi bật -->
+  <section class="mt-8 px-4">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-xl font-bold text-on-surface border-l-4 border-secondary pl-3 leading-tight tracking-tight">Đánh
+        giá từ cộng đồng</h3>
+    </div>
+    <div class="flex flex-col gap-4">
+      <div *ngFor="let review of reviews" class="bg-white p-4 rounded-2xl pitch-card-shadow border border-outline-variant">
+        <div class="flex items-center gap-3 mb-2">
+          <img [src]="review.user_avatar || 'https://ui-avatars.com/api/?name=User&background=random'"
+            class="w-10 h-10 rounded-full border-2 border-surface-container-high" alt="Avatar">
+          <div>
+            <h4 class="font-bold text-sm text-primary">{{ review.user_name }}</h4>
+            <div class="flex items-center text-secondary-fixed text-[10px]">
+              <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+              <span class="font-bold ml-1 text-on-surface">{{ review.rating | number:'1.1-1' }}</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-on-surface-variant italic leading-relaxed">"{{ review.comment }}"</p>
+        <p *ngIf="review.center_name" class="text-[10px] text-white mt-2 font-bold bg-primary inline-block px-2 py-0.5 rounded-md">Tại:
+          {{ review.center_name }}</p>
+      </div>
+      <div *ngIf="reviews.length === 0"
+        class="w-full text-center py-8 text-on-surface-variant text-sm bg-surface-container-low rounded-2xl border border-dashed border-outline-variant">
+        Chưa có đánh giá nào gần đây.
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-12 px-4 pb-12">
+    <h3 class="text-xl font-bold text-on-surface border-l-4 border-primary pl-3 leading-tight tracking-tight mb-6">Tại
+      sao chọn COURTIFY?</h3>
+    <div class="space-y-6">
+      <div class="flex gap-4">
+        <div class="bg-secondary-container/30 p-2 rounded-full h-fit">
+          <span class="material-symbols-outlined text-secondary text-xl"
+            style="font-variation-settings: 'FILL' 1;">confirmation_number</span>
+        </div>
+        <div>
+          <h4 class="font-label-md text-sm text-primary">Xác nhận tức thì</h4>
+          <p class="text-xs text-on-surface-variant">Đặt sân và nhận thẻ kỹ thuật số ngay lập tức.</p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <div class="bg-secondary-container/30 p-2 rounded-full h-fit">
+          <span class="material-symbols-outlined text-secondary text-xl"
+            style="font-variation-settings: 'FILL' 1;">groups</span>
+        </div>
+        <div>
+          <h4 class="font-label-md text-sm text-primary">Chia sẻ chi phí</h4>
+          <p class="text-xs text-on-surface-variant">Tự động chia sẻ chi phí đặt sân với bạn bè.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="fixed bottom-20 flex flex-col gap-3 transition-all duration-300 pointer-events-none z-[60]"
+  id="fab-container" [style.width]="fabWidth" [style.left]="fabLeft" [style.transform]="fabTransform"
+  style="padding-right: 16px; align-items: flex-end;">
+  <button
+    class="pointer-events-auto flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white shadow-xl hover:bg-primary/90 transition-transform active:scale-90"
+    id="contact-fab">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">phone</span>
+  </button>
+  <button (click)="scrollToTop()"
+    class="pointer-events-auto flex items-center justify-center w-12 h-12 rounded-full bg-outline/20 text-primary shadow-lg border border-outline-variant transition-all duration-300"
+    [class.opacity-0]="!showScrollTop" [class.translate-y-4]="!showScrollTop"
+    [class.pointer-events-none]="!showScrollTop" [class.opacity-100]="showScrollTop"
+    [class.translate-y-0]="showScrollTop" id="scroll-to-top">
+    <span class="material-symbols-outlined">arrow_upward</span>
+  </button>
+</div>

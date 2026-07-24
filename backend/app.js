@@ -32,6 +32,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 2. tạo biến cho phép truy cập CORS
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions = { origin: true };
+  callback(null, corsOptions);
+}
+
+//chạy hàm cho phép truy cập 
+app.use(cors(corsOptionsDelegate));
+
 app.use('/', indexRouter);
 app.use('/api/users', userRouter);
 app.use('/api/sport-centers', sportCenterRouter);
@@ -48,15 +57,6 @@ app.use('/api/sports', sportRouter);
 // 1. Kết nối Database
 const connectDB = require('./config/db');
 connectDB();
-
-// 2. tạo biến cho phép truy cập CORS
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions = { origin: true };
-  callback(null, corsOptions);
-}
-
-//chạy hàm cho phép truy cập 
-app.use(cors(corsOptionsDelegate));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
