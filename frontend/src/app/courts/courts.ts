@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,10 +18,10 @@ import { ApiResponse } from '../interfaces/api-response';
   styleUrls: ['./courts.css']
 })
 export class Courts implements OnInit, OnDestroy {
-  sports: Sport[] = [];
-  centers: SportCenter[] = [];
-  isLoading = false;
-  errorMessage = '';
+  sports = signal<Sport[]>([]);
+  centers = signal<SportCenter[]>([]);
+  isLoading = signal(false);
+  errorMessage = signal('');
 
   searchQuery = '';
   selectedSportId = '';
@@ -62,18 +62,18 @@ export class Courts implements OnInit, OnDestroy {
   fetchSports() {
     this.http.get<ApiResponse<Sport[]>>('http://localhost:8000/api/sports').subscribe({
       next: (res) => {
-        if (res?.success) this.sports = res.data || [];
+        if (res?.success) this.sports.set(res.data || []);
       },
       error: (err) => {
         console.error('Lỗi lấy danh sách môn thể thao:', err);
-        this.sports = [];
+        this.sports.set([]);
       }
     });
   }
 
   fetchCenters() {
-    this.isLoading = true;
-    this.errorMessage = '';
+    this.isLoading.set(true);
+    this.errorMessage.set('');
 
     let params = new HttpParams();
     if (this.searchQuery && this.searchQuery.trim()) {
@@ -82,12 +82,6 @@ export class Courts implements OnInit, OnDestroy {
     if (this.selectedSportId) {
       params = params.set('sport_id', this.selectedSportId);
     }
-    // if (this.minPrice !== null && this.minPrice !== undefined && this.minPrice? !== '') {
-    //   params = params.set('min_price', this.maxPrice!.toString());
-    // }
-    // if (this.maxPrice !== null && this.maxPrice !== undefined && this.maxPrice? !== '') {
-    //   params = params.set('max_price', this.maxPrice.toString());
-    // }
     if (this.minRating > 0) {
       params = params.set('min_rating', this.minRating.toString());
     }
@@ -97,17 +91,17 @@ export class Courts implements OnInit, OnDestroy {
 
     this.http.get<ApiResponse<SportCenter[]>>('http://localhost:8000/api/sport-centers', { params }).subscribe({
       next: (res) => {
-        this.centers = res?.success ? res.data || [] : [];
+        this.centers.set(res?.success ? res.data || [] : []);
         if (!res?.success) {
-          this.errorMessage = 'Không thể tải danh sách sân. Vui lòng thử lại sau.';
+          this.errorMessage.set('Không thể tải danh sách sân. Vui lòng thử lại sau.');
         }
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
       error: (err) => {
         console.error('Lỗi lấy danh sách sân:', err);
-        this.errorMessage = 'Lỗi kết nối với máy chủ. Vui lòng thử lại.';
-        this.centers = [];
-        this.isLoading = false;
+        this.errorMessage.set('Lỗi kết nối với máy chủ. Vui lòng thử lại.');
+        this.centers.set([]);
+        this.isLoading.set(false);
       }
     });
   }

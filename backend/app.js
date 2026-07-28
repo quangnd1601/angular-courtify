@@ -32,14 +32,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 2. tạo biến cho phép truy cập CORS
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions = { origin: true };
-  callback(null, corsOptions);
-}
 
-//chạy hàm cho phép truy cập 
-app.use(cors(corsOptionsDelegate));
+// Cho phép Frontend gọi API
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/api/users', userRouter);

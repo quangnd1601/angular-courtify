@@ -11,7 +11,7 @@ export interface SportCenter {
   average_rating: number;
   total_reviews: number;
   sport_id: {
-    _id: string;
+    _id?: string;
     name: string;
   };
   owner_id: {

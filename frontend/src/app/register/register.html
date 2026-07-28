@@ -1,130 +1,101 @@
-<div class="px-4 py-8 flex flex-col justify-center min-h-[90vh] bg-surface select-none">
-  <!-- Back button & branding -->
-  <div class="flex items-center gap-3 mb-6 max-w-md mx-auto w-full">
-    <button routerLink="/" class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 text-on-surface-variant">arrow_back</button>
-    <span class="text-xs font-bold uppercase tracking-wider text-outline">Quay lại trang chủ</span>
-  </div>
+<div class="auth-container px-4 py-12 min-h-screen select-none">
+  <!-- Dynamic glow bubbles -->
+  <div class="auth-glow-1"></div>
+  <div class="auth-glow-2"></div>
 
-  <div class="max-w-md mx-auto w-full bg-white rounded-3xl p-6 md:p-8 pitch-card-shadow border border-outline-variant/40 animate-in fade-in slide-in-from-bottom-4 duration-300">
+
+
+  <div
+    class="max-w-md mt-[-35px]  mx-auto w-full auth-card rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
     <div class="text-center mb-6">
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-3 shadow-inner">
-        <span class="material-symbols-outlined text-3xl">person_add</span>
-      </div>
-      <h2 class="text-2xl font-bold text-primary mb-1">Đăng ký tài khoản</h2>
-      <p class="text-xs text-on-surface-variant">Tạo tài khoản để trải nghiệm đặt sân tiện lợi</p>
+
+      <h2 class="text-2xl font-extrabold text-primary mb-1 tracking-tight">Đăng Ký</h2>
+      <p class="text-xs text-on-surface-variant/85">Tạo tài khoản để trải nghiệm đặt sân tiện lợi</p>
     </div>
 
     <!-- Error message banner -->
-    <div *ngIf="errorMessage" class="bg-error/10 text-error text-xs rounded-xl p-3 mb-4 border border-error/20 flex items-center gap-2 animate-in fade-in">
+    <div *ngIf="errorMessage"
+      class="bg-error/10 text-error text-xs rounded-xl p-3 mb-4 border border-error/20 flex items-center gap-2 animate-in fade-in">
       <span class="material-symbols-outlined text-sm">error</span>
       <span class="font-medium">{{ errorMessage }}</span>
     </div>
 
     <!-- Success message banner -->
-    <div *ngIf="successMessage" class="bg-success-container/30 text-primary text-xs rounded-xl p-3 mb-4 border border-outline-variant flex items-center gap-2 animate-in fade-in">
+    <div *ngIf="successMessage"
+      class="bg-success-container/30 text-primary text-xs rounded-xl p-3 mb-4 border border-outline-variant flex items-center gap-2 animate-in fade-in">
       <span class="material-symbols-outlined text-sm">check_circle</span>
       <span class="font-medium text-emerald-750">{{ successMessage }}</span>
     </div>
 
-    <form (submit)="onSubmit()" class="flex flex-col gap-3.5">
+    <form (submit)="onSubmit()" class="flex flex-col gap-4">
       <!-- Full Name -->
-      <div class="flex flex-col gap-1">
-        <label for="name" class="text-xs font-bold text-primary">Họ và tên *</label>
-        <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-xl border border-outline-variant focus-within:border-primary transition-all">
-          <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">person</span>
-          <input
-            type="text"
-            id="name"
-            placeholder="Nguyễn Văn A"
-            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
-            [(ngModel)]="name"
-            name="name"
-            required
-            [disabled]="isLoading"
-          />
+      <div class="flex flex-col gap-1.5">
+        <label for="name" class="text-xs font-bold text-primary/80">Họ và tên *</label>
+        <div
+          class="flex items-center bg-surface-container-low/50 px-3 py-2.5 rounded-xl border border-outline-variant/60 auth-input-group">
+          <span
+            class="material-symbols-outlined text-on-surface-variant/70 text-[20px] mr-2 auth-input-icon">person</span>
+          <input type="text" id="name" placeholder="Nguyễn Văn A"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface" [(ngModel)]="name"
+            name="name" required [disabled]="isLoading" />
         </div>
       </div>
 
       <!-- Email -->
-      <div class="flex flex-col gap-1">
-        <label for="email" class="text-xs font-bold text-primary">Địa chỉ Email *</label>
-        <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-xl border border-outline-variant focus-within:border-primary transition-all">
-          <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">mail</span>
-          <input
-            type="email"
-            id="email"
-            placeholder="example@gmail.com"
-            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
-            [(ngModel)]="email"
-            name="email"
-            required
-            [disabled]="isLoading"
-          />
+      <div class="flex flex-col gap-1.5">
+        <label for="email" class="text-xs font-bold text-primary/80">Địa chỉ Email *</label>
+        <div
+          class="flex items-center bg-surface-container-low/50 px-3 py-2.5 rounded-xl border border-outline-variant/60 auth-input-group">
+          <span
+            class="material-symbols-outlined text-on-surface-variant/70 text-[20px] mr-2 auth-input-icon">mail</span>
+          <input type="email" id="email" placeholder="example@gmail.com"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface" [(ngModel)]="email"
+            name="email" required [disabled]="isLoading" />
         </div>
       </div>
 
       <!-- Phone Number -->
-      <div class="flex flex-col gap-1">
-        <label for="phone" class="text-xs font-bold text-primary">Số điện thoại</label>
-        <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-xl border border-outline-variant focus-within:border-primary transition-all">
-          <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">phone</span>
-          <input
-            type="tel"
-            id="phone"
-            placeholder="0364xxxxxx"
-            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
-            [(ngModel)]="phone"
-            name="phone"
-            [disabled]="isLoading"
-          />
+      <div class="flex flex-col gap-1.5">
+        <label for="phone" class="text-xs font-bold text-primary/80">Số điện thoại</label>
+        <div
+          class="flex items-center bg-surface-container-low/50 px-3 py-2.5 rounded-xl border border-outline-variant/60 auth-input-group">
+          <span
+            class="material-symbols-outlined text-on-surface-variant/70 text-[20px] mr-2 auth-input-icon">phone</span>
+          <input type="tel" id="phone" placeholder="0364xxxxxx"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface" [(ngModel)]="phone"
+            name="phone" [disabled]="isLoading" />
         </div>
       </div>
 
       <!-- Password -->
-      <div class="flex flex-col gap-1">
-        <label for="password" class="text-xs font-bold text-primary">Mật khẩu *</label>
-        <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-xl border border-outline-variant focus-within:border-primary transition-all">
-          <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">lock</span>
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            id="password"
-            placeholder="Tối thiểu 6 ký tự"
-            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
-            [(ngModel)]="password"
-            name="password"
-            required
-            [disabled]="isLoading"
-          />
-          <button
-            type="button"
-            (click)="togglePasswordVisibility()"
-            class="material-symbols-outlined text-on-surface-variant text-[20px] ml-2 cursor-pointer hover:text-primary transition-colors"
-          >
+      <div class="flex flex-col gap-1.5">
+        <label for="password" class="text-xs font-bold text-primary/80">Mật khẩu *</label>
+        <div
+          class="flex items-center bg-surface-container-low/50 px-3 py-2.5 rounded-xl border border-outline-variant/60 auth-input-group">
+          <span
+            class="material-symbols-outlined text-on-surface-variant/70 text-[20px] mr-2 auth-input-icon">lock</span>
+          <input [type]="showPassword ? 'text' : 'password'" id="password" placeholder="Tối thiểu 6 ký tự"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface" [(ngModel)]="password"
+            name="password" required [disabled]="isLoading" />
+          <button type="button" (click)="togglePasswordVisibility()"
+            class="material-symbols-outlined text-on-surface-variant/60 text-[20px] ml-2 cursor-pointer hover:text-primary transition-colors">
             {{ showPassword ? 'visibility_off' : 'visibility' }}
           </button>
         </div>
       </div>
 
       <!-- Confirm Password -->
-      <div class="flex flex-col gap-1">
-        <label for="confirmPassword" class="text-xs font-bold text-primary">Xác nhận mật khẩu *</label>
-        <div class="flex items-center bg-surface-container-low px-3 py-2.5 rounded-xl border border-outline-variant focus-within:border-primary transition-all">
-          <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">lock</span>
-          <input
-            [type]="showConfirmPassword ? 'text' : 'password'"
-            id="confirmPassword"
-            placeholder="Nhập lại mật khẩu"
-            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface"
-            [(ngModel)]="confirmPassword"
-            name="confirmPassword"
-            required
-            [disabled]="isLoading"
-          />
-          <button
-            type="button"
-            (click)="toggleConfirmPasswordVisibility()"
-            class="material-symbols-outlined text-on-surface-variant text-[20px] ml-2 cursor-pointer hover:text-primary transition-colors"
-          >
+      <div class="flex flex-col gap-1.5">
+        <label for="confirmPassword" class="text-xs font-bold text-primary/80">Xác nhận mật khẩu *</label>
+        <div
+          class="flex items-center bg-surface-container-low/50 px-3 py-2.5 rounded-xl border border-outline-variant/60 auth-input-group">
+          <span
+            class="material-symbols-outlined text-on-surface-variant/70 text-[20px] mr-2 auth-input-icon">lock</span>
+          <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" placeholder="Nhập lại mật khẩu"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-on-surface" [(ngModel)]="confirmPassword"
+            name="confirmPassword" required [disabled]="isLoading" />
+          <button type="button" (click)="toggleConfirmPasswordVisibility()"
+            class="material-symbols-outlined text-on-surface-variant/60 text-[20px] ml-2 cursor-pointer hover:text-primary transition-colors">
             {{ showConfirmPassword ? 'visibility_off' : 'visibility' }}
           </button>
         </div>
@@ -132,36 +103,29 @@
 
       <!-- Terms and Conditions checkbox -->
       <div class="flex items-start gap-2.5 mt-1">
-        <input
-          type="checkbox"
-          id="terms"
+        <input type="checkbox" id="terms"
           class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary/20 accent-primary cursor-pointer mt-0.5"
-          [(ngModel)]="agreeTerms"
-          name="agreeTerms"
-          required
-        />
-        <label for="terms" class="text-xs text-on-surface-variant cursor-pointer select-none leading-relaxed">
-          Tôi đã đọc và đồng ý với 
-          <a class="text-primary font-bold hover:underline">Điều khoản dịch vụ</a> và 
+          [(ngModel)]="agreeTerms" name="agreeTerms" required />
+        <label for="terms" class="text-xs text-on-surface-variant/90 cursor-pointer select-none leading-relaxed">
+          Tôi đã đọc và đồng ý với
+          <a class="text-primary font-bold hover:underline">Điều khoản dịch vụ</a> và
           <a class="text-primary font-bold hover:underline">Chính sách bảo mật</a> của Courtify.
         </label>
       </div>
 
       <!-- Submit button -->
-      <button
-        type="submit"
-        [disabled]="isLoading"
-        class="w-full py-3 bg-primary text-white text-sm font-bold rounded-xl shadow-md hover:bg-primary/95 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-75 disabled:pointer-events-none mt-2 cursor-pointer"
-      >
-        <span *ngIf="isLoading" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+      <button type="submit" [disabled]="isLoading"
+        class="w-full py-3.5 bg-primary text-white text-sm font-bold rounded-xl hover-lift btn-press flex items-center justify-center gap-2 disabled:opacity-70 disabled:pointer-events-none mt-2 cursor-pointer">
+        <span *ngIf="isLoading"
+          class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
         {{ isLoading ? 'Đang khởi tạo...' : 'Đăng ký tài khoản' }}
       </button>
     </form>
 
     <!-- Redirect link -->
     <div class="mt-6 text-center">
-      <p class="text-xs text-on-surface-variant">
-        Đã có tài khoản? 
+      <p class="text-xs text-on-surface-variant/90">
+        Đã có tài khoản?
         <a routerLink="/login" class="text-primary font-bold hover:underline cursor-pointer">Đăng nhập</a>
       </p>
     </div>

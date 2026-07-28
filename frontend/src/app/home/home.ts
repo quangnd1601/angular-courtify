@@ -50,20 +50,20 @@ export class Home implements OnInit {
         if (res && res.success) {
           const allCenters = res.data;
 
-          // Sân phổ biến 
+          //  phổ biến 
           this.popularCenters = [...allCenters].sort((a, b) => b.total_bookings - a.total_bookings).slice(0, 5);
 
-          // Sân hot trending 
+          //  hot trending 
           this.trendingCenters = [...allCenters].sort((a, b) => b.total_views - a.total_views).slice(0, 5);
 
-          // Sân đánh giá tốt
+          //  đánh giá tốt
           this.topRatedCenters = [...allCenters].sort((a, b) => b.average_rating - a.average_rating).slice(0, 5);
         }
       },
       error: (err) => console.error(">>> API sport-centers error:", err)
     });
 
-    // Fetch Vouchers (Khuyến mãi)
+    //  voucher
     this.http.get<ApiResponse<Voucher[]>>("http://localhost:8000/api/vouchers").subscribe({
       next: (res) => {
         if (res && res.success) {

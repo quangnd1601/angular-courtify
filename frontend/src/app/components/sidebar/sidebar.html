@@ -16,15 +16,15 @@
     
     <!-- Header -->
     <div class="p-4 bg-primary text-white flex items-center justify-between">
-      <div class="flex items-center gap-3">
+      <div [routerLink]="getCurrentUser() ? '/profile' : '/login'" (click)="closeSidebar()" class="flex items-center gap-3 cursor-pointer flex-1 min-w-0">
         <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/30 overflow-hidden shrink-0">
           <img *ngIf="getCurrentUser()?.avatar_url" [src]="getCurrentUser()?.avatar_url" alt="Avatar" class="w-full h-full object-cover" />
           <span *ngIf="!getCurrentUser()?.avatar_url" class="material-symbols-outlined">person</span>
         </div>
         <div class="flex-1 min-w-0">
           <h4 class="font-bold text-sm mb-0.5 truncate">{{ getCurrentUser() ? getCurrentUser().name : 'Chào bạn,' }}</h4>
-          <p *ngIf="!getCurrentUser()" class="text-xs text-primary-fixed cursor-pointer hover:underline font-bold" routerLink="/login" (click)="closeSidebar()">Đăng nhập ngay</p>
-          <p *ngIf="getCurrentUser()" class="text-xs text-[#ffdad6] cursor-pointer hover:underline font-bold" (click)="logout()">Đăng xuất</p>
+          <p *ngIf="!getCurrentUser()" class="text-xs text-primary-fixed cursor-pointer hover:underline font-bold">Đăng nhập ngay</p>
+          <p *ngIf="getCurrentUser()" class="text-xs text-[#ffdad6] hover:underline font-bold">Xem hồ sơ</p>
         </div>
       </div>
       <button class="material-symbols-outlined text-white/80 p-1 rounded-full hover:bg-white/10 active:scale-90 transition-transform" (click)="closeSidebar()">close</button>
@@ -46,7 +46,7 @@
           </a>
         </li>
         <li>
-          <a routerLink="#" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+          <a routerLink="/booking-history" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
             <span class="material-symbols-outlined text-on-surface-variant">history</span>
             <span class="font-bold text-sm">Lịch sử đặt sân</span>
           </a>
@@ -73,9 +73,9 @@
       <hr class="border-t border-outline-variant/50 my-2 mx-6">
       <ul class="flex flex-col">
         <li>
-          <a routerLink="#" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
+          <a routerLink="/profile" (click)="closeSidebar()" class="flex items-center gap-4 px-6 py-3.5 text-on-surface hover:bg-primary/5 hover:text-primary transition-colors">
             <span class="material-symbols-outlined text-on-surface-variant">settings</span>
-            <span class="font-bold text-sm">Cài đặt</span>
+            <span class="font-bold text-sm">Hồ sơ cá nhân</span>
           </a>
         </li>
       </ul>

@@ -4,10 +4,10 @@ const bookingController = require('../controllers/bookingController');
 
 const authen = require('../middleware/authen');
 
-// API Xem lịch sử đặt sân - Cần đăng nhập
+// API Xem lịch sử đặt sân
 router.get('/history', authen, bookingController.getMyBookings);
 
-// API Đặt sân mới - Cần đăng nhập
+// API Đặt sân mới 
 router.post('/', authen, bookingController.createBooking);
 
 module.exports = router;

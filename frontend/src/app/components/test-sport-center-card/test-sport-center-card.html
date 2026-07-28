@@ -1,0 +1,9 @@
+<p>test-sport-center-card works!</p>
+
+@for (sport of sports; track sport._id) {
+    <h1>{{ sport?.name }}</h1>
+} @empty {
+    <h1>Đang tải dữ liệu...</h1>
+}
+<!-- Thêm text hoặc icon -->
+<button [routerLink]="'/courts'">Xem danh sách sân</button>

@@ -1,0 +1,116 @@
+<div class="px-4 py-4 pb-24 min-h-screen bg-surface select-none">
+
+  <!-- Tabs -->
+  <div class="flex border-b border-outline-variant/60 mb-6 bg-white rounded-xl p-1 shadow-sm sticky top-[60px] z-40">
+    <button (click)="setTab('ALL')" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all"
+      [ngClass]="currentTab === 'ALL' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:text-on-surface'">
+      Tất cả
+    </button>
+    <button (click)="setTab('UPCOMING')" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all"
+      [ngClass]="currentTab === 'UPCOMING' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:text-on-surface'">
+      Sắp diễn ra
+    </button>
+    <button (click)="setTab('COMPLETED')" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all"
+      [ngClass]="currentTab === 'COMPLETED' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:text-on-surface'">
+      Hoàn thành
+    </button>
+    <button (click)="setTab('CANCELLED')" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all"
+      [ngClass]="currentTab === 'CANCELLED' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:text-on-surface'">
+      Đã hủy
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="filteredBookings.length === 0"
+    class="bg-white rounded-2xl p-8 border border-outline-variant/60 text-center shadow-sm py-16">
+    <div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-4">
+      <span class="material-symbols-outlined text-on-surface-variant text-3xl">history</span>
+    </div>
+    <h3 class="text-base font-bold text-on-surface mb-2">Chưa có lịch đặt sân</h3>
+    <p class="text-sm text-on-surface-variant mb-6">Bạn chưa có lịch đặt sân nào thuộc danh mục này.</p>
+    <button routerLink="/courts"
+      class="px-6 py-3 bg-primary text-white font-bold text-sm rounded-xl hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-all cursor-pointer inline-flex items-center gap-2">
+      <span class="material-symbols-outlined text-sm">search</span>
+      Tìm sân đặt ngay
+    </button>
+  </div>
+
+  <!-- Booking List -->
+  <div *ngIf="filteredBookings.length > 0" class="flex flex-col gap-4">
+    <div *ngFor="let booking of filteredBookings"
+      class="bg-white rounded-2xl border border-outline-variant/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+      <!-- Card Top Info -->
+      <div class="p-4 flex gap-3">
+        <!-- Thumbnail -->
+        <div class="w-20 h-20 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-100">
+          <img [src]="booking.image" alt="Court Image" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Info details -->
+        <div class="flex-1 min-w-0 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Mã: {{ booking.code
+                }}</span>
+              <span [class]="'text-[10px] px-2 py-0.5 rounded font-extrabold ' + getStatusClass(booking.status)">
+                {{ booking.statusText }}
+              </span>
+            </div>
+            <h3 class="font-extrabold text-sm text-slate-800 truncate mb-0.5">{{ booking.sportCenterName }}</h3>
+            <p class="text-xs text-on-surface-variant font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px] text-slate-400">sports_score</span>
+              {{ booking.courtName }} ({{ booking.sportType }})
+            </p>
+          </div>
+
+          <div class="text-[11px] text-slate-500 font-semibold flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-[13px] text-slate-400">schedule</span>
+            <span>{{ booking.timeSlot }} | {{ booking.bookingDate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Footer Actions & Price -->
+      <div class="bg-slate-50/70 border-t border-slate-100 px-4 py-3 flex items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] text-slate-400 block font-semibold">Tổng tiền thanh toán</span>
+          <span class="text-sm font-black text-primary">{{ booking.totalPrice }}</span>
+        </div>
+
+        <div class="flex gap-2">
+          <!-- Upcoming actions -->
+          <ng-container *ngIf="booking.status === 'UPCOMING'">
+            <button
+              class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-[11px] rounded-lg active:scale-95 transition-all">
+              Hủy
+            </button>
+            <button
+              class="px-3 py-1.5 bg-primary text-white font-bold text-[11px] rounded-lg shadow-sm active:scale-95 transition-all">
+              Chi tiết
+            </button>
+          </ng-container>
+
+          <!-- Completed actions -->
+          <ng-container *ngIf="booking.status === 'COMPLETED'">
+            <button
+              class="px-3 py-1.5 bg-white border border-primary/20 hover:border-primary/40 text-primary font-bold text-[11px] rounded-lg active:scale-95 transition-all">
+              Đánh giá
+            </button>
+            <button routerLink="/courts"
+              class="px-3 py-1.5 bg-primary text-white font-bold text-[11px] rounded-lg shadow-sm active:scale-95 transition-all">
+              Đặt lại
+            </button>
+          </ng-container>
+
+          <!-- Cancelled actions -->
+          <ng-container *ngIf="booking.status === 'CANCELLED'">
+            <button routerLink="/courts"
+              class="px-3 py-1.5 bg-primary text-white font-bold text-[11px] rounded-lg shadow-sm active:scale-95 transition-all">
+              Đặt lại
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

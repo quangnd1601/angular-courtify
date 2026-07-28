@@ -115,7 +115,7 @@
     </button>
 
     <button
-      *ngFor="let sport of sports; trackBy: trackById"
+      *ngFor="let sport of sports(); trackBy: trackById"
       (click)="selectSport(sport._id)"
       class="whitespace-nowrap px-4 py-1.5 text-xs font-bold rounded-full transition-colors border"
       [ngClass]="selectedSportId === sport._id ? 'bg-primary text-white border-primary' : 'bg-white text-on-surface border-outline-variant'"
@@ -126,7 +126,7 @@
 
   <div class="flex items-center justify-between mb-4">
     <p class="text-sm text-on-surface-variant">
-      <span class="font-bold text-on-surface">{{ centers.length }}</span> sân được tìm thấy
+      <span class="font-bold text-on-surface">{{ centers().length }}</span> sân được tìm thấy
     </p>
     <div class="flex items-center gap-1 text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded-md">
       <span class="material-symbols-outlined text-[14px]">sort</span>
@@ -134,15 +134,15 @@
     </div>
   </div>
 
-  <div *ngIf="errorMessage" class="bg-error/10 text-error rounded-2xl p-4 mb-4 border border-error/20">
-    {{ errorMessage }}
+  <div *ngIf="errorMessage()" class="bg-error/10 text-error rounded-2xl p-4 mb-4 border border-error/20">
+    {{ errorMessage() }}
   </div>
 
-  <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+  <div *ngIf="isLoading()" class="flex justify-center items-center py-12">
     <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
   </div>
 
-  <div *ngIf="!isLoading && !errorMessage && centers.length === 0" class="bg-white rounded-2xl p-8 border border-outline-variant text-center shadow-sm">
+  <div *ngIf="!isLoading() && !errorMessage() && centers().length === 0" class="bg-white rounded-2xl p-8 border border-outline-variant text-center shadow-sm">
     <div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-4">
       <span class="material-symbols-outlined text-on-surface-variant text-3xl">sports_score</span>
     </div>
@@ -156,8 +156,8 @@
     </button>
   </div>
 
-  <div *ngIf="!isLoading && centers.length > 0" class="grid gap-4">
-    <div *ngFor="let center of centers; trackBy: trackById" class="h-[320px]">
+  <div *ngIf="!isLoading() && centers().length > 0" class="grid gap-4">
+    <div *ngFor="let center of centers(); trackBy: trackById" class="h-[320px]">
       <app-sport-center-card [center]="center"></app-sport-center-card>
     </div>
   </div>

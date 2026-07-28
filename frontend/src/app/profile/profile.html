@@ -1,0 +1,129 @@
+<div class="px-4 py-4 pb-24 min-h-screen bg-surface select-none ">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <button routerLink="/"
+        class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 text-on-surface-variant">arrow_back</button>
+      <h1 class="text-xl font-bold text-on-surface">Hồ sơ cá nhân</h1>
+    </div>
+    <button (click)="toggleEdit()"
+      class="text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 text-primary bg-primary/5 active:scale-95 transition-all">
+      {{ isEditing ? 'Hủy' : 'Chỉnh sửa' }}
+    </button>
+  </div>
+
+  <!-- Success Toast -->
+  <div *ngIf="showSaveSuccess"
+    class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-emerald-500 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-300">
+    <span class="material-symbols-outlined  text-sm">check_circle</span>
+    <span>Cập nhật thông tin thành công!</span>
+  </div>
+
+  <!-- Profile Card -->
+  <div class="bg-white rounded-3xl p-6 border border-outline-variant/60 shadow-sm mb-6 flex flex-col items-center">
+    <!-- Avatar Section -->
+    <div class="relative mb-4 group">
+      <div
+        class="w-24 h-24 rounded-full overflow-hidden border-2 border-primary/20 bg-[#0e1d61] flex items-center justify-center shadow-inner">
+        <img *ngIf="user.avatar_url" [src]="user.avatar_url" alt="Avatar" class="w-full h-full text-white object-cover">
+        <span *ngIf="!user.avatar_url" class="material-symbols-outlined text-4xl text-white">person</span>
+      </div>
+      <label *ngIf="isEditing"
+        class="absolute bottom-0 right-0 bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shadow-md hover:bg-primary/95 transition-colors">
+        <span class="material-symbols-outlined text-sm">photo_camera</span>
+        <input type="file" (change)="onAvatarChange($event)" accept="image/*" class="hidden">
+      </label>
+    </div>
+
+    <h2 class="text-lg font-black text-slate-800">{{ user.name }}</h2>
+    <p class="text-xs text-slate-400 font-semibold mt-0.5">{{ user.email }}</p>
+  </div>
+
+  <!-- Profile Form -->
+  <form (submit)="saveProfile()" class="flex flex-col gap-4">
+    <div class="bg-white rounded-3xl p-6 border border-outline-variant/60 shadow-sm flex flex-col gap-4">
+      <!-- Fullname -->
+      <div>
+        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Họ và tên</label>
+        <div
+          class="flex items-center gap-2 bg-slate-50 border border-slate-200/80 px-3 py-2.5 rounded-xl transition-colors focus-within:border-primary">
+          <span class="material-symbols-outlined text-sm text-slate-400">person</span>
+          <input type="text" [(ngModel)]="user.name" name="name" [disabled]="!isEditing"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 disabled:text-slate-500 font-medium"
+            placeholder="Nhập họ và tên">
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Địa chỉ Email</label>
+        <div
+          class="flex items-center gap-2 bg-slate-50 border border-slate-200/80 px-3 py-2.5 rounded-xl transition-colors focus-within:border-primary">
+          <span class="material-symbols-outlined text-sm text-slate-400">mail</span>
+          <input type="email" [(ngModel)]="user.email" name="email" [disabled]="!isEditing"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 disabled:text-slate-500 font-medium"
+            placeholder="Nhập email">
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số điện thoại</label>
+        <div
+          class="flex items-center gap-2 bg-slate-50 border border-slate-200/80 px-3 py-2.5 rounded-xl transition-colors focus-within:border-primary">
+          <span class="material-symbols-outlined text-sm text-slate-400">phone</span>
+          <input type="tel" [(ngModel)]="user.phone" name="phone" [disabled]="!isEditing"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 disabled:text-slate-500 font-medium"
+            placeholder="Nhập số điện thoại">
+        </div>
+      </div>
+
+      <!-- Birthday -->
+      <div>
+        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Ngày sinh</label>
+        <div
+          class="flex items-center gap-2 bg-slate-50 border border-slate-200/80 px-3 py-2.5 rounded-xl transition-colors focus-within:border-primary">
+          <span class="material-symbols-outlined text-sm text-slate-400">calendar_month</span>
+          <input type="date" [(ngModel)]="user.birthday" name="birthday" [disabled]="!isEditing"
+            class="flex-1 bg-transparent border-none outline-none text-sm text-slate-700 disabled:text-slate-500 font-medium">
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div>
+        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Giới tính</label>
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold text-slate-600">
+            <input type="radio" [(ngModel)]="user.gender" name="gender" value="MALE" [disabled]="!isEditing"
+              class="accent-primary">
+            Nam
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold text-slate-600">
+            <input type="radio" [(ngModel)]="user.gender" name="gender" value="FEMALE" [disabled]="!isEditing"
+              class="accent-primary">
+            Nữ
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold text-slate-600">
+            <input type="radio" [(ngModel)]="user.gender" name="gender" value="OTHER" [disabled]="!isEditing"
+              class="accent-primary">
+            Khác
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col gap-3">
+      <button *ngIf="isEditing" type="submit"
+        class="w-full py-3.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-all cursor-pointer text-center">
+        Lưu thay đổi
+      </button>
+
+      <button type="button" (click)="logout()"
+        class="w-full py-3.5 bg-rose-50 hover:bg-rose-100/80 text-rose-600 text-sm font-bold rounded-xl active:scale-[0.98] transition-all cursor-pointer text-center flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">logout</span>
+        Đăng xuất tài khoản
+      </button>
+    </div>
+  </form>
+</div>

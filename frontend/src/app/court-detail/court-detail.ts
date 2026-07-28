@@ -98,7 +98,7 @@ export class CourtDetail implements OnInit, OnDestroy {
     });
   }
 
-  // --- Getters for Time Slots Grouping ---
+  // --- gom các khung giờ lại với nhau ---
   get morningSlots() {
     return this.timeSlots.filter(s => parseInt(s.start_time.split(':')[0]) < 12);
   }

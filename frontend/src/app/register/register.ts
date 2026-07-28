@@ -63,14 +63,12 @@ export class Register {
       confirm_password: this.confirmPassword
     }).subscribe({
       next: (res) => {
-        this.isLoading = false;
         this.successMessage = 'Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...';
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 1500);
       },
       error: (err) => {
-        this.isLoading = false;
         this.errorMessage = err.error?.message || 'Có lỗi xảy ra trong quá trình đăng ký.';
       }
     });
